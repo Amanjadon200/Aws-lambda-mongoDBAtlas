@@ -1,0 +1,33 @@
+service: aws-node-http-api-project
+frameworkVersion: '3'
+
+plugins:
+  - serverless-dotenv-plugin
+  - serverless-offline
+provider:
+  name: aws
+  runtime: nodejs18.x
+  region: us-east-1
+  memorySize: 128
+  stage: dev
+  httpApi:
+    cors: true
+functions:
+  createUser:
+    handler: src/handlers/createUser.createUser
+    events:
+      - httpApi:
+          path: /users
+          method: post
+  getAllUser:
+    handler: src/handlers/getAllUser.getUser
+    events:
+      - httpApi:
+          path: /getAllUser
+          method: GET
+  myProfile:
+    handler: src/handlers/myProfile.myProfile
+    events:
+      - httpApi:
+          path: /me/{email}
+          method: GET
